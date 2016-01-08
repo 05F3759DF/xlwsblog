@@ -1,0 +1,26 @@
+{
+  "name": "xlwsblog-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dog2cat/xlwsblog.git"
+  },
+  "keywords": [
+    "nodejs"
+  ],
+  "author": "Xu Liangwei",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dog2cat/xlwsblog/issues"
+  },
+  "homepage": "https://github.com/dog2cat/xlwsblog#readme",
+  "devDependencies": {
+    "nodemon": "^1.8.1"
+  }
+}
