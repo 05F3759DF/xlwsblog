@@ -1,2 +1,5 @@
 # xlwsblog
-blog website using vuejs
+my blog website using vuejs
+
+## usage
+1. `cd frontend;npm install;npm start`
