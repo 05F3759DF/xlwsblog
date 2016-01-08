@@ -1,6 +1,6 @@
 <template>
   <div id="editor">
-    <textarea v-model="input" debounce="300"></textarea>
+    <textarea v-model="input" debounce="150" @keydown.9="processTab"></textarea>
     <div v-html="input | marked"></div>
   </div>
 </template>
@@ -9,8 +9,38 @@
   export default {
     data() {
       return {
-        input: '# hello',
+        input: '# Title',
+        tabWidth: 2,
       }
+    },
+    methods: {
+      processTab(event) {
+        let src = event.srcElement
+        event.returnValue = false
+        let selectionEnd = event.srcElement.selectionEnd
+        let selectionStart = event.srcElement.selectionStart
+        let content = src.value
+        if (selectionStart === selectionEnd) {
+          content = content.substring(0, selectionStart) +
+            ' '.repeat(this.tabWidth) +
+            content.substring(selectionEnd, content.length)
+          selectionStart = selectionStart + this.tabWidth
+          selectionEnd = selectionEnd + this.tabWidth
+        } else {
+          let lines = content.substring(selectionStart, selectionEnd).split('\n')
+          let totalLength = 0
+          for (let i = 0; i < lines.length; i++) {
+            content = content.substring(0, selectionStart + totalLength) +
+              ' '.repeat(this.tabWidth)  +
+              content.substring(selectionStart + totalLength, content.length)
+            totalLength += this.tabWidth + lines[i].length + 1
+          }
+          selectionEnd += this.tabWidth * lines.length
+        }
+        src.value = content
+        src.selectionStart = selectionStart
+        src.selectionEnd = selectionEnd
+      },
     },
     filters: {
       marked: require('marked'),
