@@ -1,11 +1,18 @@
 <template>
-  <div id="editor">
+  <div class="editor">
     <textarea v-model="input" debounce="150" @keydown.9="processTab"></textarea>
-    <div v-html="input | marked"></div>
+    <div class="browser" v-html="input | marked"> </div>
   </div>
 </template>
 
 <script>
+  import marked from 'marked'
+  require('highlight.js/styles/vs.css')
+  marked.setOptions({
+    highlight: function(code, lang) {
+        return require('highlight.js').highlightAuto(code, [lang]).value;
+    }
+  })
   export default {
     data() {
       return {
@@ -43,20 +50,20 @@
       },
     },
     filters: {
-      marked: require('marked'),
+      marked: marked,
     },
   }
 </script>
 
 <style>
-  html, body, #editor {
+  html, body, .editor {
     margin: 0;
     height: 100%;
-    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-family: 'Times New Roman', Arial, sans-serif;
     color: #333;
   }
 
-  textarea, #editor div {
+  textarea, .editor div {
     display: inline-block;
     width: 49%;
     height: 100%;
@@ -78,7 +85,12 @@
     padding: 20px;
   }
 
-  code {
-    color: #f66;
+  div pre {
+    border: 1px gray solid;
+    background-color: #eef
   }
+  div code {
+    font-family: "Courier New"
+  }
+
 </style>
